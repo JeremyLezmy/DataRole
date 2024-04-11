@@ -1,0 +1,55 @@
+SUJETS,JUNIOR 👶,CONFIRME 👨,SENIOR 👴
+Python,"Sait écrire un traitement de donnée simple dans un notebook
+Connait les librairies essentiels (pandas, numpy)","A participé à des projets complexes en équipes
+Connaît des librairies plus avancées (pytest, pyspark)
+A travaillé avec différentes sources de données non locales.
+A produit des visuels/comptes rendu
+(par exemple matplotlib,streamlit)
+A automatisé ou fait face à des problèmatiques d'automatisation
+A fait du POO","Lead d'un projet python.
+Connait les design pattern et sait les appliquer.
+sait optimiser le code et les temps de traitement.
+Maîtrise pyspark, dask ou d'autres librairies liées à la data.
+A automatisé son process et les tests."
+Big Data,Comprend la différence DataLake/DataWarehouse et a déjà travaillé avec ,"A utilisé Spark/Hadoop/Hive dans une mission.
+Connait les notion de Lazy computation, format parquet,...
+","Sait utiliser SparkUI pour optimiser l'utilisation des resosurces 
+dans un Cluster.
+(HPC/Cloud)
+Maitrise Change Data Capture"
+SQL,"Utilisation des fonctions basique. SELECT, UPDATE, JOIN","Sait utiliser les fonctions d'aggregations.
+Connait les principes de normalisation d'une table - Comprend l'organisation d'une base/model de données. 
+Sait reconnaitre et optimiser les problèmes de performance","Sait gerer les index,
+gerer un flux de données entrant.
+A travaillé avec de la grosse volumétrie.
+A vu plusieurs technos SQL/NoSQL."
+"Java, Scala, Matlab, R",A déjà utilisé un de ces languages pour des analyses de données simple et ponctuels (manuels),"A déjà utilisé un de ces languages pour des projets dans lesquels 
+il fallait communiquer avec d'autres sources de données (API, BDD, FTP..)
+et a du mettre en place des algos complexes d'analyse",
+"AWS, GCP, Azure","Utiliser les services de bases du cloud provider, surtout IaaS (VM/Storage)","Utiliser les services PaaS du cloud provider
+Gestion des rôles, des droits d'accès (Fonctions d'automatisations lambda/AzureFunciton, IAM/AD)",déployer une infrastructure complexe & scalable (basée sur les services du cloud provider)
+"Informatica, Talend, fivetran etc.","Connait un ETL et ses fonctions basiques : 
+Mapping, connection à une BDD/API","A participé à des projets complexes 
+(multiples sources/target, nombreux flux, gestion de format etc)
+A versionné et automatisé son projet.",
+"Connaissance des algos 
+DataScience","Connait random Forest, fully connected NN, et autre regréssions linéaires. K-means/KNN
+Sait expliquer la différence entre entrainement supervisé et non supervisé.","Sait exliquer au moins un modèle d'analyse plus poussée, par exemple :
+Suport Vector Machine, Convolutionnal NN, Principal Component Analysis, 
+Hidden Markov Model, Time sequence Analysis throught K-clustering. etc",Maîtrise la majorité des algos précédement cités et sait les expliquer dans le détails et les vulgariser
+"Tensorflow, Keras, scikit-learn, DSS",a appliqué les algos ci-dessus avec les outils cités,a appliqué les algos ci-dessus avec les outils cités,a appliqué les algos ci-dessus avec les outils cités
+OPS,Comprend le fonctionnement d'une CI/CD et en a déjà utlisée un mise en place,A déjà configuré un CI/CD simple dans un projet et connait les différents outils (Jenkins/GitLab/Azure pipelines),"Sait mettre en place une CI/CD complète avec tests automatisés, gestion des environnements., etc.
+Maîtrise les problèmatiques MLOPS d'entrainement continu"
+Git,"connait les commandes de base : 
+commit, push/pull, merge, checkout etc.","a travaillé en équipe avec au moins 4 personnes sur le même repo. 
+Et sait faire fonctionner un CI/CD simple","Maîtrise git parfaitement, sait gerer des conflits de branche systematiquement.
+Sait configurer une CI/CD avec test, coverage, build etc.."
+"Partners
+(Dataiku/Databricks/Snowflake)",a déjà utilisé les fonctions basiques dans un environement controlé,certifié + utilisation poussée de l'outil en mission,"certifié + Mise en place de l'outil et utilisation avancé.
+Référent technique sur l'outil dans l'équipe"
+"PowerBI, Qlik, Tableau","Sait faire un dashboard simple à partir de spécifications
+Sait appliquer un thème graphique","Sait manipuler les séries temporelles
+Peut créer des rapports dynamiques
+Peut travailler avec le métier pour définir les KPI","Maîtrise le cycle de livraison d'un dashboard
+Sait optimiser les données pour accélérer le rafraîchissement des données et maîtriser les coûts
+Saît mettre en place différents profils utilisateurs avec sécurité à la ligne"

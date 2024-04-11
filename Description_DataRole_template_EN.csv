@@ -1,0 +1,52 @@
+TOPICS,JUNIOR 👶,CONFIRMED 👨,SENIOR 👴
+Python,"Can write a simple data processing script in a notebook
+Knows essential libraries (pandas, numpy)","Participated in complex team projects
+Knows more advanced libraries (pytest, pyspark)
+Worked with various non-local data sources.
+Produced visuals/reports
+(for example matplotlib, streamlit)
+Automated or dealt with automation issues
+Has object-oriented programming experience","Lead on a Python project.
+Knows design patterns and can apply them.
+Can optimize code and processing times.
+Masters pyspark, dask, or other data-related libraries.
+Automated their process and tests."
+Big Data,Understands the difference between DataLake/DataWarehouse and has worked with before,"Used Spark/Hadoop/Hive on a project.
+Knows Lazy computation, parquet format, etc.","Knows how to use SparkUI to optimize resource usage 
+in a Cluster.
+(HPC/Cloud)
+Masters Change Data Capture"
+SQL,"Basic function usage. SELECT, UPDATE, JOIN","Can use aggregation functions.
+Knows table normalization principles - Understands database/table organization. 
+Can recognize and optimize performance issues","Can manage indexes,
+manage incoming data flow.
+Worked with large volumes of data.
+Has seen various SQL/NoSQL technologies."
+"Java, Scala, Matlab, R",Has used one of these languages for simple and occasional data analysis (manual),"Has used one of these languages for projects in which
+communication with other data sources (API, DB, FTP..) was necessary
+and had to implement complex analysis algorithms",
+"AWS, GCP, Azure","Using basic services of the cloud provider, especially IaaS (VM/Storage)","Using PaaS services of the cloud provider
+Role management, access rights management (Lambda/AzureFunction automation functions, IAM/AD)",Deploying a complex & scalable infrastructure (based on cloud provider services)
+"Informatica, Talend, fivetran etc.","Knows an ETL and its basic functions: 
+Mapping, connecting to a DB/API","Participated in complex projects 
+(multiple sources/targets, numerous flows, format management etc)
+Versioned and automated their project.",
+"Data Science algorithms knowledge","Knows random Forest, fully connected NN, and other linear regressions. K-means/KNN
+Can explain the difference between supervised and unsupervised training.","Can explain at least one more advanced analysis model, for example:
+Support Vector Machine, Convolutional NN, Principal Component Analysis, Hidden Markov Model, Time sequence Analysis through K-clustering. etc","Masters most of the previously mentioned algorithms and can explain them in detail and simplify them"
+"Tensorflow, Keras, scikit-learn, DSS",applied the above algorithms with the mentioned tools,applied the above algorithms with the mentioned tools,applied the above algorithms with the mentioned tools
+OPS,Understands the functioning of CI/CD and has already used one,Has already configured a simple CI/CD in a project and knows different tools (Jenkins/GitLab/Azure pipelines),"Can set up a complete CI/CD with automated tests, environment management., etc.
+Masters MLOPS issues of continuous training"
+Git,"knows basic commands: 
+commit, push/pull, merge, checkout etc.","Has worked in a team with at least 4 people on the same repo. 
+And knows how to operate a simple CI/CD","Masters git perfectly, knows how to handle branch conflicts systematically.
+Can configure a CI/CD with testing, coverage, build etc.."
+"Partners
+(Dataiku/Databricks/Snowflake)",has used basic functions in a controlled environment,certified + advanced use of the tool on a project,"certified + Set up the tool and advanced use.
+Technical reference on the tool within the team"
+"PowerBI, Qlik, Tableau","Can create a simple dashboard from specifications
+Can apply a graphical theme","Can manipulate time series
+Can create dynamic reports
+Can work with business to define KPIs","Masters the delivery cycle of a dashboard
+Can optimize data to speed up data refresh and manage costs
+Can set up different user profiles with line-level security"
