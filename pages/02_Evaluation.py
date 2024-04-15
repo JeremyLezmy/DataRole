@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 st.set_page_config(
     page_title="Evaluation",
     page_icon=":lower_left_fountain_pen:",
     layout="wide",
 )
-
+st.sidebar.success("Select a page above.")
 st.markdown("# Candidate Evaluation")
 
 st.write(
@@ -16,3 +17,76 @@ In order to be as unbiased as possible, the coefficient won't be visible in this
 Don't forget to submit your evaluation at the end!
 """
 )
+
+
+if "random_eval_key" not in st.session_state:
+    st.session_state["random_eval_key"] = 0
+
+if (
+    "rerun_editing_eval" not in st.session_state
+    or "current_rerun_editing_eval" not in st.session_state
+):
+    st.session_state["rerun_editing_eval"] = 0
+    st.session_state["current_rerun_editing_eval"] = 0
+
+
+def check_unique_true(df):
+    for index, row in df.iterrows():
+        if row.sum() != 1:
+            return False
+    return True
+
+
+if "levels" not in st.session_state:
+    st.session_state["levels"] = ["Junior", "Confirmed", "Expert"]
+if "edited_df" not in st.session_state:
+    st.warning(
+        " It seems that you didn't modify or save your own coefficient setting. Default template will be used.",
+        icon="⚠️",
+    )
+    df = st.session_state["default_coeff"]
+    subdf = df[df.columns[:2]]
+    subdf[st.session_state["levels"]] = np.full(
+        (len(subdf), len(st.session_state["levels"])), False
+    )
+    st.session_state["empty_eval"] = subdf
+
+    columns = subdf.columns
+    edited_evaluation = st.data_editor(
+        st.session_state["empty_eval"],
+        column_config={
+            columns[0]: st.column_config.TextColumn(disabled=True),
+            columns[1]: st.column_config.TextColumn(disabled=True),
+            columns[2]: st.column_config.TextColumn(disabled=True),
+            "Junior": st.column_config.CheckboxColumn(
+                None,
+                help="Is the candidate Junior?",
+            ),
+        },
+        use_container_width=True,
+        key=st.session_state["random_eval_key"],
+    )
+
+
+if (
+    st.session_state["rerun_editing_eval"]
+    == st.session_state["current_rerun_editing_eval"] + 1
+):
+    st.session_state["current_rerun_editing_eval"] += 1
+    st.info("Values have been reset.", icon="ℹ️")
+
+col0, col1, col2, col3 = st.columns([1, 1, 1, 1])
+with col1:
+    if st.button("Save Evaluation"):
+        st.session_state["Final_Evaluation"] = edited_evaluation
+        st.info("Coefficient saved.", icon="ℹ️")
+with col2:
+    if st.button("Reset Values"):
+        st.cache_data.clear()
+        st.session_state["random_eval_key"] += 1
+        if "Final_Evaluation" in st.session_state:
+            del st.session_state["Final_Evaluation"]
+            st.session_state["rerun_editing_eval"] += 1
+        else:
+            st.session_state["rerun_editing_eval"] += 1
+        st.rerun()

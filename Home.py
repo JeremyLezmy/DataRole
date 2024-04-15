@@ -53,6 +53,9 @@ if st.button("Set your coefficients here!"):
 if "default_coeff" not in st.session_state:
     st.session_state["default_coeff"] = default_df
 
+if "levels" not in st.session_state:
+    st.session_state["levels"] = ["Junior", "Confirmed", "Expert"]
+
 st.markdown(
     """ 
             ## Evaluation  
