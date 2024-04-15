@@ -16,6 +16,9 @@ Don't forget to _save the edited dataframe_ to use your custom version.
 """
 )
 
+if "clicked_save_coeff" not in st.session_state:
+    st.session_state.clicked_save_coeff = False
+
 if "random_key" not in st.session_state:
     st.session_state["random_key"] = 0
 
@@ -52,20 +55,10 @@ else:
         key=st.session_state["random_key"],
     )
 
-
-if (
-    st.session_state["rerun_editing_coeff"]
-    == st.session_state["current_rerun_editing_coeff"] + 1
-):
-    st.session_state["current_rerun_editing_coeff"] += 1
-    st.info("Values have been reset.", icon="ℹ️")
-
-
 col0, col1, col2, col3 = st.columns([1, 1, 1, 1])
 with col1:
     if st.button("Save Coefficients"):
-        st.session_state["edited_df"] = edited_df
-        st.info("Coefficient saved.", icon="ℹ️")
+        st.session_state.clicked_save_coeff = True
 
 with col2:
     if st.button("Reset Values"):
@@ -78,3 +71,18 @@ with col2:
         else:
             st.session_state["rerun_editing_coeff"] += 1
         st.rerun()
+
+
+if st.session_state.clicked_save_coeff:
+
+    st.session_state["edited_df"] = edited_df
+    st.info("Coefficient saved.", icon="ℹ️")
+    st.session_state.clicked_save_coeff = False
+
+
+if (
+    st.session_state["rerun_editing_coeff"]
+    == st.session_state["current_rerun_editing_coeff"] + 1
+):
+    st.session_state["current_rerun_editing_coeff"] += 1
+    st.info("Values have been reset.", icon="ℹ️")
