@@ -41,6 +41,7 @@ def check_unique_true(df):
 
 if "levels" not in st.session_state:
     st.session_state["levels"] = ["Junior", "Confirmed", "Expert"]
+
 if "edited_df" not in st.session_state:
     st.warning(
         " It seems that you didn't modify or save your own coefficient setting. Default template will be used.",
@@ -49,15 +50,20 @@ if "edited_df" not in st.session_state:
     df = st.session_state["default_coeff"]
 else:
     df = st.session_state["edited_df"]
-subdf = df[df.columns[:2]]
-subdf[st.session_state["levels"]] = np.full(
-    (len(subdf), len(st.session_state["levels"])), False
-)
-st.session_state["empty_eval"] = subdf
+
+
+if "Final_Evaluation" in st.session_state:
+    subdf = st.session_state["Final_Evaluation"]
+else:
+    subdf = df[df.columns[:2]]
+    subdf[st.session_state["levels"]] = np.full(
+        (len(subdf), len(st.session_state["levels"])), False
+    )
+    st.session_state["empty_eval"] = subdf
 
 columns = subdf.columns
 edited_evaluation = st.data_editor(
-    st.session_state["empty_eval"],
+    subdf,
     column_config={
         columns[0]: st.column_config.TextColumn(disabled=True),
         columns[1]: st.column_config.TextColumn(disabled=True),
@@ -72,12 +78,12 @@ edited_evaluation = st.data_editor(
 )
 
 
-col0, col1, col2, col3 = st.columns([1, 1, 1, 1])
-with col1:
+cols = st.columns([2, 1, 1, 1, 2])
+with cols[1]:
     if st.button("Save Evaluation"):
         st.session_state.clicked_save_eval = True
 
-with col2:
+with cols[3]:
     if st.button("Reset Values"):
         st.cache_data.clear()
         st.session_state["random_eval_key"] += 1
@@ -119,4 +125,31 @@ if (
     st.info("Values have been reset.", icon="ℹ️")
 
 
-# st.dataframe(final_df.set_index("Sujet"))
+##### GET RESULTS ######
+
+
+st.markdown(
+    """
+    <style>
+    .element-container:has(style){
+        display: none;
+    }
+    #button-after {
+        display: none;
+    }
+    .element-container:has(#button-after) {
+        display: none;
+    }
+    .element-container:has(#button-after) + div button {
+        background-color: orange;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+# st.button("button1")
+st.markdown('<span id="button-after"></span>', unsafe_allow_html=True)
+colss = st.columns([2, 1, 1, 1, 2])
+with colss[2]:
+    st.button("Submit and get results")
+# st.button("button2")
