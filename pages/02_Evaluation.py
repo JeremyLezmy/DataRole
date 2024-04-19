@@ -7,7 +7,18 @@ st.set_page_config(
     page_icon=":lower_left_fountain_pen:",
     layout="wide",
 )
-st.sidebar.success("Select a page above.")
+
+# st.sidebar.success("Select a page above.")
+with st.sidebar:
+    junior = st.slider("Junior bonus?", 0, 5, 1)
+    confirmed = st.slider("Confirmed bonus?", 0, 5, 2)
+    senior = st.slider("Senior Bonus?", 0, 5, 4)
+
+    if not (senior > confirmed and confirmed > junior):
+        st.warning(
+            " Your bonus distribution is odd, you should respect Senior > Confirmed > Junior.",
+            icon="⚠️",
+        )
 st.markdown("# Candidate Evaluation")
 
 st.write(
@@ -17,6 +28,9 @@ In order to be as unbiased as possible, the coefficient won't be visible in this
 Don't forget to submit your evaluation at the end!
 """
 )
+
+if "eval_submitted" not in st.session_state:
+    st.session_state.eval_submitted = False
 
 if "clicked_save_eval" not in st.session_state:
     st.session_state.clicked_save_eval = False
@@ -40,7 +54,10 @@ def check_unique_true(df):
 
 
 if "levels" not in st.session_state:
-    st.session_state["levels"] = ["Junior", "Confirmed", "Expert"]
+    st.session_state["levels"] = ["Junior", "Confirmed", "Senior"]
+
+if "positions" not in st.session_state:
+    st.session_state["positions"] = ["Data Viz", "Data Eng", "Data Scientist", "DBA"]
 
 if "edited_df" not in st.session_state:
     st.warning(
@@ -95,6 +112,8 @@ with cols[3]:
 
         if "Final_df" in st.session_state:
             del st.session_state["Final_df"]
+
+        st.session_state.eval_submitted = False
         st.rerun()
 
 
@@ -108,11 +127,12 @@ if st.session_state.clicked_save_eval:
             " Invalid Data, there should be 1 level selected for each topic.",
             icon="⚠️",
         )
+
     else:
         st.info("Coefficient saved.", icon="ℹ️")
         final_df = df.reset_index().merge(edited_evaluation.reset_index())
         st.session_state["Final_df"] = final_df
-        st.dataframe(final_df.set_index("Sujet"))
+        # st.dataframe(final_df.set_index("Sujet"))
 
     st.session_state.clicked_save_eval = False
 
@@ -126,14 +146,19 @@ if (
 
 
 ##### GET RESULTS ######
+import plotly.express as px
+
+# Sample data for the radar chart
+
+
+def show_final_df(df):
+    st.dataframe(df.set_index("Sujet"))
 
 
 st.markdown(
     """
     <style>
-    .element-container:has(style){
-        display: none;
-    }
+    
     #button-after {
         display: none;
     }
@@ -141,7 +166,9 @@ st.markdown(
         display: none;
     }
     .element-container:has(#button-after) + div button {
-        background-color: orange;
+        background-color: green;
+        color: white;
+        border-radius: 20px;
         }
     </style>
     """,
@@ -151,5 +178,70 @@ st.markdown(
 st.markdown('<span id="button-after"></span>', unsafe_allow_html=True)
 colss = st.columns([2, 1, 1, 1, 2])
 with colss[2]:
-    st.button("Submit and get results")
+
+    if st.button("Submit and get results"):
+        st.session_state.eval_submitted = True
+
 # st.button("button2")
+
+
+if st.session_state.eval_submitted:
+    if "Final_df" not in st.session_state:
+        st.warning(
+            " Evaluation not saved, please fill the interactive DataFrame above.",
+            icon="⚠️",
+        )
+        st.session_state.eval_submitted = False
+    else:
+        st.html(
+            '<div style="text-align: center; font-size: larger;"> Summary Evaluation Dataframe: </div>'
+        )
+        show_final_df(st.session_state["Final_df"])
+
+        with st.container():
+            # data = {
+            #     "Category": ["Data Viz", "Data Eng", "Data Scientist", "DBA"],
+            #     "Value": [4, 3, 2, 5, 4],
+            # }
+            dff = st.session_state["Final_df"]
+
+            max_bonus = {"Junior": junior, "Confirmed": confirmed, "Senior": senior}
+
+            # Compute maximum points for each position
+            summary_df = pd.DataFrame(
+                columns=["Position", "Max Points", "Current Points", "Percentage Match"]
+            )
+            summary_df["Position"] = st.session_state.positions
+            summary_df["Max Points"] = list(
+                df[st.session_state.positions].sum(axis=0) * max(max_bonus.values())
+            )
+
+            result_df = dff[["Sujet"]].copy()
+            for position in ["Data Viz", "Data Eng", "Data Scientist", "DBA"]:
+                result_df[position] = dff[position] * (
+                    dff["Junior"] * max_bonus["Junior"]
+                    + dff["Confirmed"] * max_bonus["Confirmed"]
+                    + dff["Senior"] * max_bonus["Senior"]
+                )
+
+            summary_df["Current Points"] = list(result_df.sum(axis=0)[1:])
+
+            summary_df["Percentage Match"] = (
+                summary_df["Current Points"] / summary_df["Max Points"]
+            ) * 100
+
+            st.dataframe(summary_df)
+
+            # Create radar chart using Plotly Express
+            fig = px.line_polar(
+                summary_df,
+                r="Percentage Match",
+                theta="Position",
+                line_close=True,
+                range_r=(0, 100),
+            )
+            fig.update_traces(fill="toself")
+
+            plot = st.plotly_chart(fig, use_container_width=True)
+
+        # st.session_state.eval_submitted = False
