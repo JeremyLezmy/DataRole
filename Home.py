@@ -54,13 +54,13 @@ if "default_coeff" not in st.session_state:
     st.session_state["default_coeff"] = default_df
 
 if "levels" not in st.session_state:
-    st.session_state["levels"] = ["Junior", "Confirmed", "Expert"]
+    st.session_state["levels"] = ["Junior", "Confirmed", "Senior"]
 
 st.markdown(
     """ 
             ## Evaluation  
 
-Based on these coefficients, the interviewer will select a level for the candidate among Junior, Intermediate, Confirmed and Expert.  
+Based on these coefficients, the interviewer will select a level for the candidate among Junior, Intermediate, Confirmed and Senior.  
 The level will act as a multiplicator over the coefficients.
 This step is processed in the _Evaluation_ page, and must be finalized by using the _Submit_ button at the bottom. 
 """
@@ -81,6 +81,6 @@ st.markdown(
     """
             ## Descriptions
 
-            This page describes the expected knowledges and experiences for each evaluated topic and for each level (junior, intermediate, confirmed, expert).
+            This page describes the expected knowledges and experiences for each evaluated topic and for each level (Junior, Confirmed, Senior).
             """
 )
