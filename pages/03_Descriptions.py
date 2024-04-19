@@ -6,7 +6,7 @@ st.set_page_config(
     page_icon=":scroll:",
     layout="wide",
 )
-st.sidebar.success("Select a page above.")
+# st.sidebar.success("Select a page above.")
 
 
 @st.cache_data
