@@ -1,0 +1,20 @@
+Category,Subcategory,Topic,Data Viz,Data Engineer,Data Scientist,DBA
+Technical,Language,Python,1.00,4.00,6.00,1.00
+Technical,Cloud,Big Data,1.00,4.00,1.00,2.00
+Technical,Language,SQL,4.00,4.00,2.00,6.00
+Technical,Other languages,"Java, Scala, Matlab, R",0.00,1.00,1.00,1.00
+Technical,Cloud,"AWS, GCP, Azure",1.00,2.00,1.00,6.00
+Technical,ETL,"Informatica, Talend, fivetran etc.",2.00,3.00,1.00,2.00
+Technical,Data Science,Knowledge of DataScience algorithms,0.00,1.00,5.00,0.00
+Technical,Data Science tools,"Tensorflow, Keras, scikit-learn, DSS",0.00,1.00,4.00,0.00
+Technical,Ops,OPS,0.00,3.00,2.00,1.50
+Technical,Versionning,Git - Versionning tools,1.00,2.00,1.00,2.00
+Technical,Partner,Dataiku,0.00,0.50,1.00,0.00
+Technical,Partner,Databricks,0.00,1.00,0.50,0.00
+Technical,Partner,Snowflake,0.00,0.50,0.00,4.00
+Technical,Vizualisation,"PowerBI, Qlik, Tableau",15.00,1.00,2.00,4.00
+Methods,Tests,Test practices,1.00,1.00,1.00,1.00
+Methods,Project management,"Jira, Trello, Confluence, Slack, Teams",1.00,1.00,1.00,1.00
+Culture,Data,Knowledge of Data issues and businesses ,1.00,1.00,1.00,1.00
+Culture,Documentation,"Operability doc, wiki, comments",1.00,1.00,1.00,1.00
+English,English,English,1.00,1.00,1.00,1.00

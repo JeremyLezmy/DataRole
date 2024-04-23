@@ -32,7 +32,7 @@ if (
 
 @st.cache_data
 def load_template():
-    df = pd.read_csv("default_template.csv", index_col=2)
+    df = pd.read_csv("data/default_template.csv", index_col=2)
     return df
 
 

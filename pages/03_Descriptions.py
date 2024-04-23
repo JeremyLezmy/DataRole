@@ -12,7 +12,7 @@ st.set_page_config(
 @st.cache_data
 def load_description_template():
     df = pd.read_csv(
-        "Description_DataRole_template_EN.csv",
+        "data/Description_DataRole_template_EN.csv",
         index_col=0,
     )
     return df

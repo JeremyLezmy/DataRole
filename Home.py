@@ -40,7 +40,7 @@ st.markdown(
 
 @st.cache_data
 def load_template():
-    df = pd.read_csv("default_template.csv", index_col=2)
+    df = pd.read_csv("data/default_template.csv", index_col=2)
     return df
 
 
@@ -58,23 +58,12 @@ if "levels" not in st.session_state:
 
 st.markdown(
     """ 
-            ## Evaluation  
+            ## Assessment  
 
-Based on these coefficients, the interviewer will select a level for the candidate among Junior, Intermediate, Confirmed and Senior.  
+Based on these coefficients, the interviewer will select a level for the candidate among Junior, Confirmed or Senior.  
 The level will act as a multiplicator over the coefficients.
-This step is processed in the _Evaluation_ page, and must be finalized by using the _Submit_ button at the bottom. 
+This step is processed in the _Assessment_ page, and must be finalized by using the _Submit_ button at the bottom. 
 """
-)
-
-st.markdown(
-    """
-            ## Results
-
-After the Evaluation step, the Results page will display some analysis, such as a spider graph showing a score for each data role for the candidate, or a summary dataframe.
-            The user will be allowed to download a report.
-
-
-            """
 )
 
 st.markdown(

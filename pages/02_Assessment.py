@@ -1,12 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
 st.set_page_config(
     page_title="Evaluation",
     page_icon=":lower_left_fountain_pen:",
     layout="wide",
 )
+
 
 # st.sidebar.success("Select a page above.")
 with st.sidebar:
@@ -19,6 +21,11 @@ with st.sidebar:
             " Your bonus distribution is odd, you should respect Senior > Confirmed > Junior.",
             icon="⚠️",
         )
+    st.session_state["levels_bonus"] = {
+        "junior": junior,
+        "confirmed": confirmed,
+        "senior": senior,
+    }
 st.markdown("# Candidate Evaluation")
 
 st.write(
@@ -57,7 +64,12 @@ if "levels" not in st.session_state:
     st.session_state["levels"] = ["Junior", "Confirmed", "Senior"]
 
 if "positions" not in st.session_state:
-    st.session_state["positions"] = ["Data Viz", "Data Eng", "Data Scientist", "DBA"]
+    st.session_state["positions"] = [
+        "Data Viz",
+        "Data Engineer",
+        "Data Scientist",
+        "DBA",
+    ]
 
 if "edited_df" not in st.session_state:
     st.warning(
@@ -132,7 +144,7 @@ if st.session_state.clicked_save_eval:
         st.info("Coefficient saved.", icon="ℹ️")
         final_df = df.reset_index().merge(edited_evaluation.reset_index())
         st.session_state["Final_df"] = final_df
-        # st.dataframe(final_df.set_index("Sujet"))
+        # st.dataframe(final_df.set_index("Topic"))
 
     st.session_state.clicked_save_eval = False
 
@@ -152,7 +164,7 @@ import plotly.express as px
 
 
 def show_final_df(df):
-    st.dataframe(df.set_index("Sujet"))
+    st.dataframe(df.set_index("Topic"))
 
 
 st.markdown(
@@ -216,8 +228,8 @@ if st.session_state.eval_submitted:
                 df[st.session_state.positions].sum(axis=0) * max(max_bonus.values())
             )
 
-            result_df = dff[["Sujet"]].copy()
-            for position in ["Data Viz", "Data Eng", "Data Scientist", "DBA"]:
+            result_df = dff[["Topic"]].copy()
+            for position in ["Data Viz", "Data Engineer", "Data Scientist", "DBA"]:
                 result_df[position] = dff[position] * (
                     dff["Junior"] * max_bonus["Junior"]
                     + dff["Confirmed"] * max_bonus["Confirmed"]
@@ -229,7 +241,7 @@ if st.session_state.eval_submitted:
             summary_df["Percentage Match"] = (
                 summary_df["Current Points"] / summary_df["Max Points"]
             ) * 100
-
+            st.session_state["summary_df"] = summary_df
             st.dataframe(summary_df)
 
             # Create radar chart using Plotly Express
@@ -243,5 +255,7 @@ if st.session_state.eval_submitted:
             fig.update_traces(fill="toself")
 
             plot = st.plotly_chart(fig, use_container_width=True)
+
+            # @st.cache_data
 
         # st.session_state.eval_submitted = False
