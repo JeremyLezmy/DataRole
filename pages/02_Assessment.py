@@ -242,19 +242,29 @@ if st.session_state.eval_submitted:
                 summary_df["Current Points"] / summary_df["Max Points"]
             ) * 100
             st.session_state["summary_df"] = summary_df
-            st.dataframe(summary_df)
 
-            # Create radar chart using Plotly Express
-            fig = px.line_polar(
-                summary_df,
-                r="Percentage Match",
-                theta="Position",
-                line_close=True,
-                range_r=(0, 100),
-            )
-            fig.update_traces(fill="toself")
+            col1, col2 = st.columns(2)
 
-            plot = st.plotly_chart(fig, use_container_width=True)
+            with col1:
+                st.markdown("##")
+                st.markdown("##")
+                st.markdown("##")
+                st.markdown("##")
+                st.dataframe(summary_df)
+
+            with col2:
+
+                # Create radar chart using Plotly Express
+                fig = px.line_polar(
+                    summary_df,
+                    r="Percentage Match",
+                    theta="Position",
+                    line_close=True,
+                    range_r=(0, 100),
+                )
+                fig.update_traces(fill="toself")
+
+                plot = st.plotly_chart(fig, use_container_width=True)
 
             # @st.cache_data
 
