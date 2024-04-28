@@ -1,3 +1,7 @@
 venv/
 .env
 .streamlit/secrets.toml
+pandasai.log
+cache/
+exports/
+06_Multi-Dataframe_Agent_PandasAI.py
