@@ -54,7 +54,7 @@ if "default_coeff" not in st.session_state:
     st.session_state["default_coeff"] = default_df
 
 if "levels" not in st.session_state:
-    st.session_state["levels"] = ["Junior", "Confirmed", "Senior"]
+    st.session_state["levels"] = ["No Experience", "Junior", "Confirmed", "Senior"]
 
 st.markdown(
     """ 
