@@ -74,12 +74,12 @@ else:
                         
                         Here is a result dataframe {global_df.to_json(orient="table")} called "global_df".
                         There are 3 importants informations : the topics (first column), the Data positions (Data Viz, Data Engineer, Data Scientist and DBA),
-                        and finally the level for a given subject among Junior, Confirmed and Senior.
+                        and finally the level for a given subject among No Experience, Junior, Confirmed and Senior.
                         For each couple Data position / topic, I gave a coefficient. This reflects the importance of a topic for a given position.
-                        The number of points is given by the level, where Junior gives {st.session_state["levels_bonus"]['junior']} points, Confirmed gives 
+                        The number of points is given by the level, where No Experience give 0 points, Junior gives {st.session_state["levels_bonus"]['junior']} points, Confirmed gives 
                         {st.session_state["levels_bonus"]['confirmed']} points and Senior gives {st.session_state["levels_bonus"]['senior']} points.
-                        If you want to compute the number of points for a given position, you therefore have to sum for each subject the coefficient times the 
-                        number of points (determined by the level).
+                        If you want to compute the number of points for a given Data position, you therefore have to sum for each Technical Category Topic the coefficient times the 
+                        number of points (determined by the level). The English Category and other Category are separately computed. 
                         To be sure that you well understand the process, here the summary for each position: {summary_df.to_json(orient="table")} called "summary_df".
                         You MUST return all your proposed python codes <code> in the following
                         format: ```python <code>``` . For the plots, you MUST use plotly. You MUST use "global_df" and "summary_df" to named the data.

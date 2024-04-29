@@ -7,6 +7,7 @@ from pandasai import Agent
 from pandasai import SmartDatalake, SmartDataframe
 from pandasai.responses.response_parser import ResponseParser
 import numpy as np
+import re
 
 load_dotenv()
 
@@ -95,6 +96,35 @@ with st.sidebar:
     )
 
 
+def extract_value_from_result(code_block):
+    """
+    Extracts the value from the 'result' line in the code block,
+    removing any lines containing potentially dangerous commands.
+    """
+    # Define a regular expression pattern to match dangerous commands
+    dangerous_commands = [
+        "pip install",
+        "rm",
+        "del",
+        "shutdown",
+        "import os",
+        "os.system",
+    ]
+    dangerous_pattern = "|".join(re.escape(cmd) for cmd in dangerous_commands)
+    dangerous_pattern = rf"\b({dangerous_pattern})\b"
+
+    # Remove lines containing dangerous commands
+    cleaned_code_block = re.sub(dangerous_pattern, "", code_block)
+
+    # Define a regular expression pattern to match the result line
+    pattern = r"result\s*=\s*{'type':\s*'[^']*',\s*'value':\s*(.*)}"
+
+    # Use re.sub() to replace the result line with just the value content
+    cleaned_code_block = re.sub(pattern, r"\1", cleaned_code_block)
+
+    return cleaned_code_block
+
+
 if "Final_df" not in st.session_state or "summary_df" not in st.session_state:
     st.warning(
         "You haven't carried out an assessment or have forgotten to submit it. This is a mandatory step to use your AI assistant :",
@@ -134,8 +164,7 @@ else:
     st.markdown(
         """  
         This is an entertainment purpose : you can use any available LLM model from Groq to discuss about the assessment results.  
-        This feature isn't really an agent, but rather a standard ChatBot into which a "system prompt" has been ingested, using this application context 
-        and the assessment results. 
+        This feature is an AI agent built using [_PandasAI_](https://docs.pandas-ai.com/en/latest/).
         """
     )
     st.markdown("***")
@@ -173,6 +202,24 @@ else:
 
     query = st.chat_input("Ask me any question about the dataframe")
 
+    for message in st.session_state.pandasai_messages:
+        with st.chat_message(message["role"]):
+            if message["role"] == "assistant_code":
+                st.write(f"```{message['content']}")
+                try:
+                    exec(message["content"])
+                except Exception as e:
+                    st.warning(
+                        "Something went wrong when trying to execute the code provided by the AI Assistant:",
+                        icon="⚠️",
+                    )
+                    st.write(e)
+            elif message["role"] == "user":
+                st.markdown(message["content"])
+
+            else:
+                st.code(message["content"])
+
     if query:
 
         with st.chat_message("user"):
@@ -193,7 +240,7 @@ else:
 
         # container.code(agent.last_code_executed)
         # container.write(answer)
-    st.session_state.pandasai_messages
+    # st.session_state.pandasai_messages
 
     if reset_chat or st.session_state.selected_model != model_option:
         st.session_state.pandasai_messages = []
