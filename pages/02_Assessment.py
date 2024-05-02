@@ -479,13 +479,14 @@ if st.session_state.eval_submitted:
                     showlegend=True,
                     polar=dict(
                         # bgcolor = "rgb(223, 223, 223)",
-                        bgcolor="#f0f2f6",
+                        bgcolor="#e9ecf2",
                         angularaxis=dict(
                             linewidth=2,
                             showline=True,
                             linecolor="black",
                             gridcolor="grey",
                             thetaunit="radians",
+                            color="#ff4b4b",
                         ),
                         radialaxis=dict(
                             side="counterclockwise",
@@ -494,11 +495,14 @@ if st.session_state.eval_submitted:
                             gridcolor="grey",
                             gridwidth=1,
                             angle=0,
-                            color="black",
+                            color="#ff4b4b",
                             dtick=25,
+                            tickfont=dict(
+                                size=18,
+                            ),
                         ),
                     ),
-                    paper_bgcolor="#ffffff",
+                    # paper_bgcolor="#ffffff",
                 )
                 fig.update_traces(
                     line_color="#ff4b4b",
