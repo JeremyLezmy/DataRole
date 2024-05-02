@@ -55,14 +55,19 @@ else:
     st.text("")
     st.markdown(
         """  
-        This is an entertainment purpose : you can use any available LLM model from Groq to discuss about the assessment results.  
+        This feature is an entertainment purpose : you can use any available LLM model from Groq (LLama 3 70B being the best) to discuss about the assessment results.  
         This feature isn't really an agent, but rather a standard ChatBot into which a "system prompt" has been ingested, using this application context 
-        and the assessment results. 
+        and the assessment results.  
+        However, we also add an automatic code extraction system from the LLM responses, which allows you to execute them. Therefore, it also allows you to 
+        generate some figures by asking the AI. If you get an error message, after the code execution, try to copy paste it in a new prompt to help the AI to fix the proposed code.  
+        Give it a try with the prompt _"Show me a relevant plot about these data"_ and see the result!
+
+
         """
     )
     st.markdown("***")
-    global_df = st.session_state["Final_df"]
-    summary_df = st.session_state["summary_df"]
+    global_df = st.session_state["Final_df"].copy()
+    summary_df = st.session_state["summary_df"].copy()
 
     client = Groq(
         api_key=GROQ_API_KEY,
@@ -249,6 +254,7 @@ import traceback
 def extract_python_code(text):
 
     pattern = r"```python\s(.*?)```"
+    pattern = r"```(?:python)?\s(.*?)```"
     matches = re.findall(pattern, text, re.DOTALL)
     if not matches:
         return None
@@ -292,7 +298,8 @@ def execute_code(code):
 
 # st.session_state.messages
 if (
-    "```python" in st.session_state.messages[-1]["content"]
+    "messages" in st.session_state
+    and "```python" in st.session_state.messages[-1]["content"]
     and st.session_state.messages[-1]["role"] != "system"
 ):
 

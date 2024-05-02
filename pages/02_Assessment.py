@@ -74,8 +74,9 @@ st.markdown("# Candidate Assessment")
 st.write(
     """
 Here you'll evaluate your candidate based on the topics which appear in the coefficient table.
-In order to be as unbiased as possible, the coefficient won't be visible in this step of the process.
-Don't forget to submit your evaluation at the end!
+In order to be as unbiased as possible, the coefficient won't be visible in this step of the process.  
+If you alread have a previous saved assessment, you can upload it (see sidebar) and re-use these data as starting point.  
+Don't forget to submit your evaluation at the end! 
 """
 )
 
@@ -159,9 +160,10 @@ columns = subdf.columns
 edited_evaluation = st.data_editor(
     subdf,
     column_config={
+        "_index": st.column_config.TextColumn(disabled=True),
         columns[0]: st.column_config.TextColumn(disabled=True),
         columns[1]: st.column_config.TextColumn(disabled=True),
-        columns[2]: st.column_config.TextColumn(disabled=True),
+        # columns[2]: st.column_config.TextColumn(disabled=True),
         # columns[3]: st.column_config.TextColumn(disabled=True),
         "No Experience": st.column_config.CheckboxColumn(
             None,
@@ -284,11 +286,12 @@ if st.session_state.eval_submitted:
         st.session_state.eval_submitted = False
     else:
         st.markdown("##")
-        st.markdown("##")
 
-        st.html(
-            '<div style="text-align: center; font-size: larger;"> Summary Evaluation Dataframe: </div>'
+        st.markdown(
+            '<h3  style="text-align: center; "> Summary Assessment Dataframe </h3>',
+            unsafe_allow_html=True,
         )
+        st.markdown("##")
         col_res = st.columns([7, 1])
         with col_res[0]:
             show_final_df(st.session_state["Final_df"])
@@ -434,6 +437,22 @@ if st.session_state.eval_submitted:
             st.markdown("##")
             st.markdown("##")
 
+            st.markdown(
+                """
+                        ### Basic analysis
+                        
+                        Below you'll find the main result based on the previously filled assessment:  
+                        The dataframe on the left represents the match ratio for each
+                        relevant Qualification.  
+                        This percentage level is computed regarding the maximum obtainable points and the obtained points.  
+                        The first value depends of both the desired level for the candidate, which will set the upper bond, and the multiplicator bonus for each level. 
+                        These parameters can be customized in the sidebar.  
+                        It's important to notate that the Job position results are computed only regarding the technical topics. 
+                        The other ones (for instance English or Methods/Culture) are separately analyzed.  
+                        On the right you'll see a radar chart highlighting the Percentage Match for each Qualification.
+
+                        """
+            )
             col1, col2 = st.columns(2)
 
             with col1:
@@ -453,7 +472,9 @@ if st.session_state.eval_submitted:
                 )
                 # fig.update_traces(fill="toself")
                 fig.update_layout(
-                    title="",
+                    title="Percentage Match for each Qualification (%)",
+                    title_x=0.25,
+                    title_y=0.05,
                     font_size=15,
                     showlegend=True,
                     polar=dict(
