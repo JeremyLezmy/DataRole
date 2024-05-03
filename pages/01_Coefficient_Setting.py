@@ -56,6 +56,13 @@ else:
     )
 
 col0, col1, col2, col3 = st.columns([1, 1, 1, 1])
+st.markdown(
+    """
+            <style>
+            div.stButton {text-align:center}
+            </style>""",
+    unsafe_allow_html=True,
+)
 with col1:
     if st.button("Save Coefficients"):
         st.session_state.clicked_save_coeff = True

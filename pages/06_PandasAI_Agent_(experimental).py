@@ -63,6 +63,10 @@ with st.sidebar:
             "developer": "Mistral",
         },
     }
+
+    if "selected_model" not in st.session_state:
+        st.session_state.selected_model = None
+
     if "selected_model" in st.session_state and st.session_state.selected_model != None:
         def_index = list(models.keys()).index(st.session_state.selected_model)
     else:

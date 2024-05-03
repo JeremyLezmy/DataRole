@@ -9,10 +9,24 @@ st.set_page_config(
     page_icon=":lower_left_fountain_pen:",
     layout="wide",
 )
+button_style = """
+    text-align: center;
+"""
 
 if "use_uploaded_file" not in st.session_state:
     st.session_state.use_uploaded_file = False
 # st.sidebar.success("Select a page above.")
+
+
+@st.cache_data
+def load_template():
+    df = pd.read_csv("data/default_template.csv", index_col=2)
+    return df
+
+
+# default_df = load_template()
+if "default_coeff" not in st.session_state:
+    st.session_state["default_coeff"] = load_template()
 
 with st.sidebar:
     junior = st.slider("Junior bonus?", 0, 5, 1)
@@ -188,10 +202,12 @@ edited_evaluation = st.data_editor(
 
 cols = st.columns([2, 1, 1, 1, 2])
 with cols[1]:
+
     if st.button("Save Evaluation"):
         st.session_state.clicked_save_eval = True
 
 with cols[3]:
+
     if st.button("Reset Values"):
         st.session_state.use_uploaded_file = False
         st.cache_data.clear()
@@ -253,6 +269,7 @@ st.markdown(
     
     #button-after {
         display: none;
+        text-align: center;
     }
     .element-container:has(#button-after) {
         display: none;
@@ -262,16 +279,27 @@ st.markdown(
         color: white;
         border-radius: 20px;
         }
+    .button {
+        text-align: center;
+    
+    }
     </style>
     """,
     unsafe_allow_html=True,
 )
 # st.button("button1")
 st.markdown('<span id="button-after"></span>', unsafe_allow_html=True)
-colss = st.columns([2, 1, 1, 1, 2])
+colss = st.columns([2, 1, 1, 1, 2], gap="large")
 with colss[2]:
-
+    st.markdown(
+        """
+            <style>
+            div.stButton {text-align:center}
+            </style>""",
+        unsafe_allow_html=True,
+    )
     if st.button("Submit and get results"):
+
         st.session_state.eval_submitted = True
 
 # st.button("button2")
